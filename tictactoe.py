@@ -69,11 +69,13 @@ def winner(board):
     Returns the winner of the game, if there is one.
     """
     #redo the code
+    #for loop checks the rows and columns for a winner
     for i in range(len(board)):
         if board[i][0] == board[i][1] == board[i][2]:
             return board[i][0]
         if board[0][i] == board[1][i] == board[2][i]:
             return board[0][i]
+    #remaining 2 if statements check the diagonals for a winner
     if board[0][0] == board[1][1] == board[2][2]:
         return board[0][0]
     if board[0][2] == board[1][1] == board[2][0]:
@@ -105,6 +107,38 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
+
+    def max_value(board):
+        if terminal(board):
+            return utility(board)
+        v = -math.inf
+        for action in actions(board):
+            v = max(v, min_value(result(board, action)))
+        return v
+
+    def min_value(board):
+        if terminal(board):
+            return utility(board)
+        v = math.inf
+        for action in actions(board):
+            v = min(v, max_value(result(board, action)))
+        return v
+
+    if player(board) == "X":
+        v = -math.inf
+        for action in actions(board):
+            temp = min_value(result(board, action))
+            if temp > v:
+                v = temp
+                bestAction = action
+    else:
+        v = math.inf
+        for action in actions(board):
+            temp = max_value(result(board, action))
+            if temp < v:
+                v = temp
+                bestAction = action
+    return bestAction
     
 
     

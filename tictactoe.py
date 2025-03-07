@@ -1,5 +1,8 @@
 """
 Tic Tac Toe Player
+
+Group: Jose Fuentes, Ari Montes, Daniel Peralta, Perry Wang
+This module contains all of the logic for playing the game, and for making optimal moves.
 """
 
 import math
@@ -68,7 +71,6 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    #redo the code
     #for loop checks the rows and columns for a winner
     for i in range(len(board)):
         if board[i][0] == board[i][1] == board[i][2]:
@@ -107,23 +109,28 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-
+        
     def max_value(board):
+        # Check if the game over and return utility value
         if terminal(board):
             return utility(board)
         v = -math.inf
+        # Iterate over all actions and choose the one with the maximum value
         for action in actions(board):
             v = max(v, min_value(result(board, action)))
         return v
 
     def min_value(board):
+        # Check if the game is over and return the utility value
         if terminal(board):
             return utility(board)
         v = math.inf
+        # Iterate over all actions and choose the one with the minimum value
         for action in actions(board):
             v = min(v, max_value(result(board, action)))
         return v
 
+    # Determine the current player and choose the optimal action
     if player(board) == "X":
         v = -math.inf
         for action in actions(board):
